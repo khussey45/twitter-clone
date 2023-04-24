@@ -28,7 +28,35 @@ export default async function handler(
 
     if (req.method === 'GET') {
       const { userId} = req.query;
-      
+
+      let posts;
+
+      if (userId && typeof userId === 'string') {
+        posts = await prisma.post.findMany ({
+          where: {
+            userId
+          },
+          include: {
+            user: true,
+            comments: true
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        });
+      } else {
+        posts = await prisma.post.findMany({
+          include: {
+            user: true,
+            comments: true,
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        });
+      }
+
+      return res.status(200).json(posts);
     }
   } catch (error) {
     console.log(error);
