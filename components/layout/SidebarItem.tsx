@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { IconType } from 'react-icons';
 import { BsDot } from 'react-icons/bs';
 
@@ -23,9 +23,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   auth,
   alert
 }) => {
-  const loginModal = useLoginModal();
-  const { data: currentUser } = useCurrentUser();
   const router = useRouter();
+  const loginModal = useLoginModal();
+
+  const { data: currentUser } = useCurrentUser();
+
+  
   const handleClick = useCallback(() => {
     if (onClick) {
       return onClick();
@@ -66,12 +69,14 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
         relative
         hidden
         lg:flex
+        items-row
         gap-4
         p-4
         rounded-full
         hover:bg-slate-300
         hover: bg-opacity-10
         cursor-pointer
+        items-center
         "
       >
         <Icon size={24} color="white" />
